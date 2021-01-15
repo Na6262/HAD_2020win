@@ -116,10 +116,9 @@ var keyQ = {
     timeline_variables:full_design,
     timeline:[{
       type: 'image-button-response-hack',
-      data:'keyQ',
+      data:{you:jsPsych.timelineVariable('you'),other:jsPsych.timelineVariable('other'),race:jsPsych.timelineVariable('race')},
       stimulus: function(){
         pic_index=Math.floor(Math.random() * 5);
-        console.log(pic_index);console.log(jsPsych.timelineVariable('race',true));
         switch(jsPsych.timelineVariable('race',true)){
           case 'white':
             return whitePic[pic_index];
@@ -345,13 +344,13 @@ var close_fullscreen = {
 
 // 定义实验流程（时间线）
 var timeline2 = [
-  open_fullscreen,
+  /*open_fullscreen,
   welcome,
   warmup,
   instr_keyQ,
-  keyQ_check,
+  keyQ_check,*/
   keyQ,
-  instr_slider_money,
+  /*instr_slider_money,
   slider_money_check,
   trial_slider_money,
   instr_slider_shock,
@@ -359,7 +358,7 @@ var timeline2 = [
   trial_slider_shock,
   instr_IRI,
   IRI,
-  close_fullscreen,
+  close_fullscreen,*/
 ];
 
 // 运行实验（总控制）
