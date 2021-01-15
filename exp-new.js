@@ -346,7 +346,6 @@ var close_fullscreen = {
 var timeline2 = [
   open_fullscreen,
   welcome,
-  warmup,
   instr_keyQ,
   keyQ_check,
   keyQ,
