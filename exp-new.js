@@ -345,21 +345,21 @@ var close_fullscreen = {
 
 // 定义实验流程（时间线）
 var timeline2 = [
-  //open_fullscreen,
-  //welcome,
-  //warmup,
-  //instr_keyQ,
-  //keyQ_check,
+  open_fullscreen,
+  welcome,
+  warmup,
+  instr_keyQ,
+  keyQ_check,
   keyQ,
-  //instr_slider_money,
-  //slider_money_check,
-  //trial_slider_money,
-  //instr_slider_shock,
-  //slider_shock_check,
-  //trial_slider_shock,
-  //instr_IRI,
-  //IRI,
-  //close_fullscreen,
+  instr_slider_money,
+  slider_money_check,
+  trial_slider_money,
+  instr_slider_shock,
+  slider_shock_check,
+  trial_slider_shock,
+  instr_IRI,
+  IRI,
+  close_fullscreen,
 ];
 
 // 运行实验（总控制）
