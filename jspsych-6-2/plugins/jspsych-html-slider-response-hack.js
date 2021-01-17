@@ -137,7 +137,7 @@ jsPsych.plugins['html-slider-response-hack'] = (function() {
       html += '</div>'
     }
     html += '</div>';
-    html += '<div style="height:2em; float:left; margin-right:10px;"><span style="font-size: 80%; font-weight:bold;">'+trial.labels2_title+'</span></div>';
+    html += '<div style="height:2em; float:left; margin-right:20px;"><span style="font-size: 80%; font-weight:bold;">'+trial.labels2_title+'</span></div>';
 
     html += '</div>';
     html += '</div>';
