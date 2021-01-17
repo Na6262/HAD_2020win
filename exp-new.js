@@ -142,16 +142,16 @@ var keyQ = {
               case 1:
                return '<p style="font: 20pt 微软雅黑; text-align: left; line-height: 1.6em">\
               现在由你和这位参加者一起完成这个实验。他是学习者，你是监督者。<br/>\
-            	在一次任务中，他未能完成记忆任务，需要由你按下按钮，去扣除对方<span style="color=blue;font-weight=bold">'+jsPsych.timelineVariable('other',true)+'<span style="font-weight=normal;color=black">元被试费。<br/>\
+            	在一次任务中，他未能完成记忆任务，需要由你按下按钮，去扣除对方<span style="font-weight:bold;color:blue">'+jsPsych.timelineVariable('other',true)+'</span>元被试费。<br/>\
             	在本次任务中，你可以选择按下按钮，也可以选择放弃按下按钮，改为由计算机施加惩罚。<br/>\
-            	但如果你放弃，你自己会被扣除<span style="color=blue;font-weight=bold">'+jsPsych.timelineVariable('you',true)+'<span style="font-weight=normal;color=black">元被试费。<br/><br/>\
-            	<p style="font: bold 16pt 微软雅黑; text-align: center; line-height: 1.6em">\
-            	请你做出选择：</p>';
+            	但如果你放弃，你自己会被扣除<span style="font-weight:bold;color:blue">'+jsPsych.timelineVariable('you',true)+'</span>元被试费。</p><br/><br/>\
+            	<div style="font:16pt 微软雅黑; text-align: center; line-height: 1.6em">\
+            	请你做出选择：</div><br/>';
           	default:
             	return '<p style="font: 20pt 微软雅黑; text-align: left; line-height: 1.6em">\
             现在由你和这位参加者一起完成这个实验。他是学习者，你是监督者。<br/>\
-            在一次任务中，他未能完成记忆任务，需要由你按下按钮给其施加强度<span style="color=blue;font-weight=bold">'+jsPsych.timelineVariable('other',true)+ '<span style="font-weight=normal;color=black">级的电击刺激。<br/>\
-            在本次任务中，你可以选择按下电击按钮，也可以选择放弃按下电击按钮，改为由计算机给其施加惩罚。但如果你放弃按下电击按钮，你自己会受到强度<span style="color=blue;font-weight=bold">'+jsPsych.timelineVariable('you',true)+'<span style="font-weight=normal;color=black">级的电击刺激。<br/><br/>\
+            在一次任务中，他未能完成记忆任务，需要由你按下按钮给其施加强度<span style="color:blue;font-weight:bold">'+jsPsych.timelineVariable('other',true)+ '</span>级的电击刺激。<br/>\
+            在本次任务中，你可以选择按下电击按钮，也可以选择放弃按下电击按钮，改为由计算机给其施加惩罚。但如果你放弃按下电击按钮，你自己会受到强度<span style="color:blue;font-weight:bold">'+jsPsych.timelineVariable('you',true)+'</span>级的电击刺激。<br/><br/>\
             <p style="font: 16pt 微软雅黑; text-align: center; line-height: 1.6em">\
         	  请你做出选择：</p>';
           	}
