@@ -29,7 +29,7 @@ var open_fullscreen = {
     </b>
     本实验报酬包括：基础被试费1元+认真奖励0~10元+抽取答卷中一次选择*50~80%<br/>
     <p style="font:20pt 微软雅黑;text-align: left; font-weight:bold;color: #B22222">
-    您的答卷质量对我们非常重要，也会直接决定您所获得的报酬，请务必认真参与！！<br/><br/><br/>
+    您的答卷质量对我们非常重要，也会直接决定您所获得的报酬，请务必认真参与！！<br/><br/>
     <p style="font: 14pt 微软雅黑;text-align: left;line-height: 1.6em">
     如果你同意参与，并且清楚理解了上述要求，请点击开始：
     </p>`,
