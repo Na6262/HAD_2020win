@@ -102,7 +102,7 @@ var keyQ_check={
   type: 'html-button-response',
   data: { varname: 'keyQ_check' },
   stimulus:
-    "<p style='font-size: 20px; text-align:center; font-weight: bold'>\
+    "<p style='font-size: 25px; text-align:center; font-weight: bold'>\
     在下面的问题中，如果你选择放弃按按钮，小A是否会被扣除被试费？<br/>",
   choices: ['会', '不会']
 };
