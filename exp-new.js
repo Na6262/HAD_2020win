@@ -19,17 +19,17 @@ var open_fullscreen = {
   message: `
     <p style="font: 16pt 微软雅黑; text-align: center; line-height: 1.6em">
     <b>
-    测验将在一个「全屏页面」开始，为确保最佳效果，请你：<br/>
-    （1）在电脑上进行测验，并使用主流浏览器打开本网页<br/>
+    本测验将使用全屏模式，为确保测验准确，请您：<br/>
+    （1）在电脑上完成测验，并使用主流浏览器打开本网页<br/>
     &emsp;&emsp;（Chrome、Edge、Firefox、Safari等，不要用IE）<br/>
     （2）关掉电脑上其他正在运行的程序或将其最小化<br/>
     （3）将手机调至静音，并尽可能减少环境噪音干扰<br/>
     （4）在测验过程中不要退出全屏<br/>
     （5）请务必认真作答，主试将对答卷进行核查<br/><br/><br/>
     </b>
-    本实验报酬包括：基础被试费1元+认真奖励0~10元+抽取答卷中一次选择*50~80%<br/>
+    本实验报酬包括：基础被试费6元+基于参与测试认真程度的奖励0~6元<br/>
     <p style="font:20pt 微软雅黑;text-align: center; font-weight:bold;color: #B22222">
-    您的答卷质量对我们非常重要，也会直接决定您所获得的报酬，请务必认真参与！！<br/><br/>
+    您的答卷质量对我们非常重要，也会直接影响您的报酬，请务必认真作答！！<br/><br/>
     <p style="font: 14pt 微软雅黑;text-align: center;line-height: 1.6em">
     如果你同意参与，并且清楚理解了上述要求，请点击开始：
     </p>`,
@@ -63,10 +63,10 @@ switch(condition){
       <p style="font: 20pt 微软雅黑; text-align: left; line-height: 1.6em">\
     请想象你正在参与一个由两人共同完成的实验。实验的主题是“惩罚对记忆效果的影响”。<br/>\
     参与实验的两个人分别是学习者和监督者。<br/><br/>\
-    学习者需要在30秒内记忆10组词语和图片的配对。<br/>\
-    如学习者未能完成记忆任务，则会被扣除一定被试费作为惩罚。<br/>\
-    扣除的钱数取决于学习者的任务表现。<br/>\
-    监督者的任务是在学习者未能完成记忆任务时按下手中的按钮，扣除其被试费。</p>`,
+    学习者需要在30秒内记住10组“词语+图片”的组合。<br/>\
+    如学习者未能完成记忆任务，则会被扣除一定被试费作为惩罚。扣除的钱数取决于学习者的任务表现。<br/>\
+    对学习者的惩罚可以由监督者按键实施；如果监督者拒绝按键实施惩罚，则由计算机来实施对学习者的惩罚，但同时监督者也会受到一定程度的经济损失。<br/>\
+    在本次测试中，你被选中做为监督者。</p>`,
       ],
       show_clickable_nav: true,
       allow_backward: false,
@@ -84,11 +84,11 @@ switch(condition){
       <p style="font: 16pt 微软雅黑; text-align: left; line-height: 1.6em">\
     请想象你正在参与一个由两人共同完成的实验。实验的主题是“惩罚对记忆效果的影响”。<br/>\
     参与实验的两个人分别是学习者和监督者。<br/><br/>\
-    学习者需要在30秒内记忆10组词语和图片的配对。<br/>\
-    如学习者未能完成记忆任务，则会受到电击刺激作为惩罚。<br/>\
-    惩罚强度取决于学习者的任务表现。电击强度分为1～10级。<br/>\
-    电击强度0级表示电击不会引起疼痛感觉，电击强度10级表示电击会引起非常痛的感觉。<br/>\
-    监督者的任务是在学习者未能完成记忆任务时按下手中的电击按钮，给予其电击惩罚。</p>`,
+    学习者需要在30秒内记住10组“词语+图片”的组合。<br/>\
+    如学习者未能完成记忆任务，则会受到电击刺激作为惩罚。惩罚强度取决于学习者的任务表现。<br/>\
+    电击强度分为0～10级。其中，强度0级强度的电击不会引起疼痛感觉，10级强度的电击会引起难以忍受的疼痛。<br/>\
+    对学习者的惩罚可以由监督者按键实施；如果监督者拒绝按键实施惩罚，则由计算机来实施对学习者的惩罚，但同时监督者也会受到一定程度的电击。<br/>\
+    在本次测试中，你被选中做为监督者。</p>`,
       ],
       show_clickable_nav: true,
       allow_backward: false,
@@ -141,17 +141,16 @@ var keyQ = {
             switch(condition){
               case 1:
                return '<p style="font: 20pt 微软雅黑; text-align: left; line-height: 1.6em">\
-              现在由你和这位参加者一起完成这个实验。他是学习者，你是监督者。<br/>\
-            	在一次任务中，他未能完成记忆任务，需要由你按下按钮，去扣除对方<span style="font-weight:bold;color:blue">'+jsPsych.timelineVariable('other',true)+'</span>元被试费。<br/>\
-            	在本次任务中，你可以选择按下按钮，也可以选择放弃按下按钮，改为由计算机施加惩罚。<br/>\
-            	但如果你放弃，你自己会被扣除<span style="font-weight:bold;color:blue">'+jsPsych.timelineVariable('you',true)+'</span>元被试费。</p><br/><br/>\
+              图片中的学习者未能完成本次记忆任务。<br/>\
+              现在需由你按键实施惩罚，去扣除对方<span style="font-weight:bold;color:blue">'+jsPsych.timelineVariable('other',true)+'</span>元。<br/>\
+            	但是如果你选择放弃按键，你会被扣除<span style="font-weight:bold;color:blue">'+jsPsych.timelineVariable('you',true)+'</span>元。</p><br/><br/>\
             	<div style="font:16pt 微软雅黑; text-align: center; line-height: 1.6em">\
             	请你做出选择：</div><br/>';
           	default:
             	return '<p style="font: 20pt 微软雅黑; text-align: left; line-height: 1.6em">\
-            现在由你和这位参加者一起完成这个实验。他是学习者，你是监督者。<br/>\
-            在一次任务中，他未能完成记忆任务，需要由你按下按钮给其施加强度<span style="color:blue;font-weight:bold">'+jsPsych.timelineVariable('other',true)+ '</span>级的电击刺激。<br/>\
-            在本次任务中，你可以选择按下电击按钮，也可以选择放弃按下电击按钮，改为由计算机给其施加惩罚。但如果你放弃按下电击按钮，你自己会受到强度<span style="color:blue;font-weight:bold">'+jsPsych.timelineVariable('you',true)+'</span>级的电击刺激。<br/><br/>\
+            图片中的学习者未能完成本次记忆任务。<br/>\
+            现在需由你按键实施惩罚，去给予对方强度<span style="color:blue;font-weight:bold">'+jsPsych.timelineVariable('other',true)+ '</span>级的电击。<br/>\
+            但是如果你选择放弃按键，你会被给予强度<span style="color:blue;font-weight:bold">'+jsPsych.timelineVariable('you',true)+'</span>级的电击。<br/><br/>\
             <p style="font: 16pt 微软雅黑; text-align: center; line-height: 1.6em">\
         	  请你做出选择：</p>';
           	}
@@ -237,11 +236,11 @@ var instr_slider_shock = {
 假设你需要和他<span style='font-size:20px;color:blue;font-weight:bold'>共同承担一定强度的电击刺激<span style='font-weight:normal;text-align:left;color:black'>。<br/>\
 对于以下的问题，请选出你最喜欢的分配方式。<br/>\
 记住，每个题目只能选一个分配方式。<br/>
-所有的分配方式并无对错之分，只是你的个人偏好。<br/>\<br/>\
+所有的分配方式并无对错之分，只是你的个人偏好。<br/><br/>\
 你的选择将会决定你和另一个人各自承担多强的电击刺激。<br/>\
 题目中的数字表示电击的强度。其中，<br/>\
 <span style='font-size:20px;text-align:left;font-weight:bold'>
-0表示电击不会引起疼痛感觉， 100表示电击会引起非常痛的感觉。`,
+0表示电击不会引起疼痛感觉， 100表示电击会引起难以忍受的疼痛。`,
   ],
   show_clickable_nav: true,
   allow_backward: false,
