@@ -1,27 +1,46 @@
-/*
+function timer() {
+    var second = document.getElementById('timer');
+    var button1 = document.getElementsByClassName('jspsych-btn')[0];
+    var button2 = document.getElementsByClassName('jspsych-btn')[1];
+    if (second !== null) {
+        if (second.innerHTML > 1) {
+            second.innerHTML = second.innerHTML - 1;
+        } else {
+            //button.innerHTML = ' ';
+            button1.disabled = false;
+            button2.disabled = false;
+        }
+    }
+}
+
+
 const btn_html_timer = [
   `<style onload="tid=setInterval(timer, 1000)"></style>
-     <button onclick="clearInterval(tid)" class="jspsych-btn" disabled=true>%choice%</button>`];
-*/
+   <button onclick="clearInterval(tid)" class="jspsych-btn" disabled=true>%choice%</button>`,`<style onload="tid=setInterval(timer, 1000)"></style>
+   <button onclick="clearInterval(tid)" class="jspsych-btn" disabled=true>%choice%</button>`];
+
 // image height
 const h1 = 200;
 const h2 = 400;
+const countdown=3;//for key questions, participants would have to wait 3 seconds to click the button
 //图片库
 white_shock = ['pics/p-W1.jpg', 'pics/p-W2.jpg', 'pics/p-W3.jpg', 'pics/p-W4.jpg', 'pics/p-W5.jpg'];
 china_shock = ['pics/p-C1.jpg', 'pics/p-C2.jpg', 'pics/p-C3.jpg', 'pics/p-C4.jpg', 'pics/p-C5.jpg'];
 white_money = ['pics/m-W1.jpg', 'pics/m-W2.jpg', 'pics/m-W3.jpg', 'pics/m-W4.jpg', 'pics/m-W5.jpg'];
 china_money = ['pics/m-C1.jpg', 'pics/m-C2.jpg', 'pics/m-C3.jpg', 'pics/m-C4.jpg', 'pics/m-C5.jpg'];
 
+var images=[].concat(white_shock,china_shock,white_money,china_money);
 
 var open_fullscreen = {
   type: 'fullscreen',
   fullscreen_mode: true,
   message: `
-    <p style="font: 16pt 微软雅黑; text-align: center; line-height: 1.6em">
+    <p style="font: 20pt 微软雅黑; text-align: center; line-height: 1.6em">
     <b>
     本测验将使用全屏模式，为确保测验准确，请您：<br/>
+    <p style="font: 16pt 微软雅黑; text-align:center; line-height: 1.6em">
     （1）在电脑上完成测验，并使用主流浏览器打开本网页<br/>
-    &emsp;&emsp;（Chrome、Edge、Firefox、Safari等，不要用IE）<br/>
+    <span style="font-weight:normal">&emsp;&emsp;（Chrome、Edge、Firefox、Safari等，不要用IE）</span><br/>
     （2）关掉电脑上其他正在运行的程序或将其最小化<br/>
     （3）将手机调至静音，并尽可能减少环境噪音干扰<br/>
     （4）在测验过程中不要退出全屏<br/>
@@ -142,21 +161,23 @@ var keyQ = {
               case 1:
                return '<p style="font: 20pt 微软雅黑; text-align: left; line-height: 1.6em">\
               图片中的学习者未能完成本次记忆任务。<br/>\
-              现在需由你按键实施惩罚，去扣除对方<span style="font-weight:bold;color:blue">'+jsPsych.timelineVariable('other',true)+'</span>元。<br/>\
-            	但是如果你选择放弃按键，你会被扣除<span style="font-weight:bold;color:blue">'+jsPsych.timelineVariable('you',true)+'</span>元。</p><br/><br/>\
+              现在需由你按键实施惩罚，去扣除对方<span style="font-weight:bold;color:red">'+jsPsych.timelineVariable('other',true)+'</span>元。<br/>\
+            	但是如果你选择放弃按键，你会被扣除<span style="font-weight:bold;color:red">'+jsPsych.timelineVariable('you',true)+'</span>元。</p><br/><br/>\
             	<div style="font:16pt 微软雅黑; text-align: center; line-height: 1.6em">\
             	请你做出选择：</div><br/>';
           	default:
             	return '<p style="font: 20pt 微软雅黑; text-align: left; line-height: 1.6em">\
             图片中的学习者未能完成本次记忆任务。<br/>\
-            现在需由你按键实施惩罚，去给予对方强度<span style="color:blue;font-weight:bold">'+jsPsych.timelineVariable('other',true)+ '</span>级的电击。<br/>\
-            但是如果你选择放弃按键，你会被给予强度<span style="color:blue;font-weight:bold">'+jsPsych.timelineVariable('you',true)+'</span>级的电击。<br/><br/>\
+            现在需由你按键实施惩罚，去给予对方强度<span style="color:red;font-weight:bold">'+jsPsych.timelineVariable('other',true)+ '</span>级的电击。<br/>\
+            但是如果你选择放弃按键，你会被给予强度<span style="color:red;font-weight:bold">'+jsPsych.timelineVariable('you',true)+'</span>级的电击。<br/><br/>\
             <p style="font: 16pt 微软雅黑; text-align: center; line-height: 1.6em">\
         	  请你做出选择：</p>';
           	}
       },
-      choices: ["按下按钮", "放弃按按钮"],
-      require_movement: true,
+      choices: ['按下按钮(<span id="timer">'+countdown+'</span>)', '放弃按按钮'],
+      //(<span id="timer">'+countdown+'</span>)
+      button_html: btn_html_timer,
+      //require_movement: true,
     }]
 };
 
@@ -346,10 +367,10 @@ var close_fullscreen = {
 
 // 定义实验流程（时间线）
 var timeline2 = [
-  open_fullscreen,
+  /*open_fullscreen,
   welcome,
   instr_keyQ,
-  keyQ_check,
+  keyQ_check,*/
   keyQ,
   instr_slider_money,
   slider_money_check,
@@ -365,6 +386,7 @@ var timeline2 = [
 // 运行实验（总控制）
 jsPsych.init({
   timeline: timeline2,
+  preload_images:images,
   show_progress_bar: true,
   on_finish: function () {
     jsPsych.data.get().localSave("csv", "data.csv");  // download from browser
