@@ -1,28 +1,30 @@
-function timer() {
-    var second = document.getElementById('timer');
-    var button1 = document.getElementsByClassName('jspsych-btn')[0];
-    var button2 = document.getElementsByClassName('jspsych-btn')[1];
-    if (second !== null) {
-        if (second.innerHTML > 1) {
-            second.innerHTML = second.innerHTML - 1;
-        } else {
-            //button.innerHTML = ' ';
-            button1.disabled = false;
-            button2.disabled = false;
-        }
-    }
-}
+// function timer() {
+//     var second = document.getElementById('timer');
+//     var button1 = document.getElementsByClassName('jspsych-btn')[0];
+//     var button2 = document.getElementsByClassName('jspsych-btn')[1];
+//     if (second !== null) {
+//         if (second.innerHTML > 1) {
+//             second.innerHTML = second.innerHTML - 1;
+//         } else {
+//             //button.innerHTML = ' ';
+//             button1.disabled = false;
+//             button2.disabled = false;
+//         }
+//     }
+// }
 
+ 
+// const btn_html_timer = [
+//   `<style onload="tid=setInterval(timer, 1000)"></style>
+//    <button onclick="clearInterval(tid)" class="jspsych-btn" disabled=true>%choice%</button>`,`<style onload="tid=setInterval(timer, 1000)"></style>
+//    <button onclick="clearInterval(tid)" class="jspsych-btn" disabled=true>%choice%</button>`];
 
-const btn_html_timer = [
-  `<style onload="tid=setInterval(timer, 1000)"></style>
-   <button onclick="clearInterval(tid)" class="jspsych-btn" disabled=true>%choice%</button>`,`<style onload="tid=setInterval(timer, 1000)"></style>
-   <button onclick="clearInterval(tid)" class="jspsych-btn" disabled=true>%choice%</button>`];
+// const countdown=3;//for key questions, participants would have to wait 3 seconds to click the button
+
 
 // image height
 const h1 = 200;
 const h2 = 400;
-const countdown=3;//for key questions, participants would have to wait 3 seconds to click the button
 //图片库
 white_shock = ['pics/p-W1.jpg', 'pics/p-W2.jpg', 'pics/p-W3.jpg', 'pics/p-W4.jpg', 'pics/p-W5.jpg'];
 china_shock = ['pics/p-C1.jpg', 'pics/p-C2.jpg', 'pics/p-C3.jpg', 'pics/p-C4.jpg', 'pics/p-C5.jpg'];
@@ -174,10 +176,12 @@ var keyQ = {
         	  请你做出选择：</p>';
           	}
       },
-      choices: ['按下按钮(<span id="timer">'+countdown+'</span>)', '放弃按按钮'],
+      choices: ['按下按钮', '放弃按按钮'],
+      // choices: ['按下按钮(<span id="timer">'+countdown+'</span>)', '放弃按按钮'],
       //(<span id="timer">'+countdown+'</span>)
-      button_html: btn_html_timer,
+      // button_html: btn_html_timer,
       //require_movement: true,
+      timeout: 3,
     }]
 };
 
@@ -367,10 +371,10 @@ var close_fullscreen = {
 
 // 定义实验流程（时间线）
 var timeline2 = [
-  /*open_fullscreen,
+  open_fullscreen,
   welcome,
   instr_keyQ,
-  keyQ_check,*/
+  keyQ_check,
   keyQ,
   instr_slider_money,
   slider_money_check,
