@@ -1,81 +1,64 @@
 /**
- * jspsych-html-slider-response-hack
- * a jspsych plugin for free response survey questions
+ * jspsych-image-button-response-hack
+ * fenghao
+ * 
+ * hack jspsych-image-button-response
  *
- * hack by fenghao
- *
- */
+ **/
 
-
-jsPsych.plugins['html-slider-response-hack'] = (function() {
+jsPsych.plugins["image-button-response-hack"] = (function() {
 
   var plugin = {};
 
+  jsPsych.pluginAPI.registerPreload('image-button-response-hack', 'stimulus', 'image');
+
   plugin.info = {
-    name: 'html-slider-response-hack',
+    name: 'image-button-response-hack',
     description: '',
     parameters: {
       stimulus: {
-        type: jsPsych.plugins.parameterType.HTML_STRING,
+        type: jsPsych.plugins.parameterType.IMAGE,
         pretty_name: 'Stimulus',
         default: undefined,
-        description: 'The HTML string to be displayed'
+        description: 'The image to be displayed'
       },
-      min: {
+      stimulus_height: {
         type: jsPsych.plugins.parameterType.INT,
-        pretty_name: 'Min slider',
-        default: 0,
-        description: 'Sets the minimum value of the slider.'
-      },
-      max: {
-        type: jsPsych.plugins.parameterType.INT,
-        pretty_name: 'Max slider',
-        default: 100,
-        description: 'Sets the maximum value of the slider',
-      },
-      start: {
-        type: jsPsych.plugins.parameterType.INT,
-        pretty_name: 'Slider starting value',
-        default: 50,
-        description: 'Sets the starting value of the slider',
-      },
-      step: {
-        type: jsPsych.plugins.parameterType.INT,
-        pretty_name: 'Step',
-        default: 1,
-        description: 'Sets the step of the slider'
-      },
-      labels: {
-        type: jsPsych.plugins.parameterType.HTML_STRING,
-        pretty_name:'Labels',
-        default: [],
-        array: true,
-        description: 'Labels of the slider.',
-      },
-      slider_width: {
-        type: jsPsych.plugins.parameterType.INT,
-        pretty_name:'Slider width',
+        pretty_name: 'Image height',
         default: null,
-        description: 'Width of the slider in pixels.'
+        description: 'Set the image height in pixels'
       },
-      button_label: {
-        type: jsPsych.plugins.parameterType.STRING,
-        pretty_name: 'Button label',
-        default:  '继续',
-        array: false,
-        description: 'Label of the button to advance.'
+      stimulus_width: {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'Image width',
+        default: null,
+        description: 'Set the image width in pixels'
       },
-      require_movement: {
+      maintain_aspect_ratio: {
         type: jsPsych.plugins.parameterType.BOOL,
-        pretty_name: 'Require movement',
-        default: false,
-        description: 'If true, the participant will have to move the slider before continuing.'
+        pretty_name: 'Maintain aspect ratio',
+        default: true,
+        description: 'Maintain the aspect ratio after setting width or height'
+      },
+      choices: {
+        type: jsPsych.plugins.parameterType.STRING,
+        pretty_name: 'Choices',
+        default: undefined,
+        array: true,
+        description: 'The labels for the buttons.'
+      },
+      button_html: {
+        type: jsPsych.plugins.parameterType.STRING,
+        pretty_name: 'Button HTML',
+        default: '<button class="jspsych-btn">%choice%</button>',
+        array: true,
+        description: 'The html of the button. Can create own style.'
       },
       prompt: {
         type: jsPsych.plugins.parameterType.STRING,
         pretty_name: 'Prompt',
         default: null,
-        description: 'Any content here will be displayed below the slider.'
+        description: 'Any content here will be displayed under the button.'
       },
       stimulus_duration: {
         type: jsPsych.plugins.parameterType.INT,
@@ -89,124 +72,180 @@ jsPsych.plugins['html-slider-response-hack'] = (function() {
         default: null,
         description: 'How long to show the trial.'
       },
+      margin_vertical: {
+        type: jsPsych.plugins.parameterType.STRING,
+        pretty_name: 'Margin vertical',
+        default: '0px',
+        description: 'The vertical margin of the button.'
+      },
+      margin_horizontal: {
+        type: jsPsych.plugins.parameterType.STRING,
+        pretty_name: 'Margin horizontal',
+        default: '8px',
+        description: 'The horizontal margin of the button.'
+      },
       response_ends_trial: {
         type: jsPsych.plugins.parameterType.BOOL,
         pretty_name: 'Response ends trial',
         default: true,
-        description: 'If true, trial will end when user makes a response.'
+        description: 'If true, then trial will end when user responds.'
       },
     }
   }
 
   plugin.trial = function(display_element, trial) {
 
-    var slider_width = 500;
-    var html = '<div id="jspsych-html-slider-response-wrapper" style="margin: 100px 0px;">';
-    html += '<div id="jspsych-html-slider-response-stimulus">' + trial.stimulus + '</div>';
-    html += '<div class="jspsych-html-slider-response-container" style="position:relative; margin: 0 auto 3em auto; ';
-    if(trial.slider_width !== null){
-      // html += 'width:'+trial.slider_width+'px;';
-      slider_width = trial.slider_width;
+    // display stimulus
+    var html = '<img src="'+trial.stimulus+'" id="jspsych-image-button-response-stimulus" style="';
+    if(trial.stimulus_height !== null){
+      html += 'height:'+trial.stimulus_height+'px; '
+      if(trial.stimulus_width == null && trial.maintain_aspect_ratio){
+        html += 'width: auto; ';
+      }
     }
-    html += '">';
-    html += '<div style="height:2em; float:left; margin-right:10px;"><span style="font-size: 80%; font-weight:bold;">'+trial.labels1_title+'</span></div>';
-    html += '<div class="slider-label-1" style="height: 2em; width: '+slider_width+'px; float: right; position: relative;">';
-    for(var j=0; j < trial.labels1.length; j++){
-      var width = 100/(trial.labels1.length-1);
-      var left_offset = (j * (100 /(trial.labels1.length - 1))) - (width/2);
-      html += '<div style="display: inline-block; position: absolute; left:'+left_offset+'%; text-align: center; width: '+width+'%;">';
-      html += '<span style="text-align: center; font-size: 80%;">'+trial.labels1[j]+'</span>';
-      html += '</div>'
+    if(trial.stimulus_width !== null){
+      html += 'width:'+trial.stimulus_width+'px; '
+      if(trial.stimulus_height == null && trial.maintain_aspect_ratio){
+        html += 'height: auto; ';
+      }
     }
-    html += '</div>';
+    html +='"></img>';
 
-    html += '<div style="clear:both;"></div>';
-
-    html += '<div style="float:right;">';
-    html += '<input type="range" value="'+trial.start+'" min="'+trial.min+'" max="'+trial.max+'" step="'+trial.step+'" style="width: '+slider_width+'px;" id="jspsych-html-slider-response-response"></input>';
-    html += '</div>';
-
-    html += '<div style="clear:both;"></div>';
-
-    html += '<div class="slider-label-2" style="height: 2em; width: '+slider_width+'px; float: right; position: relative;">';
-    for(var j=0; j < trial.labels2.length; j++){
-      var width = 100/(trial.labels2.length-1);
-      var left_offset = (j * (100 /(trial.labels2.length - 1))) - (width/2);
-      html += '<div style="display: inline-block; position: absolute; left:'+left_offset+'%; text-align: center; width: '+width+'%;">';
-      html += '<span style="text-align: center; font-size: 80%;">'+trial.labels2[j]+'</span>';
-      html += '</div>'
-    }
-    html += '</div>';
-    html += '<div style="height:2em; float:left; margin-right:20px;"><span style="font-size: 80%; font-weight:bold;">'+trial.labels2_title+'</span></div>';
-
-    html += '</div>';
-    html += '</div>';
-
-    if (trial.prompt !== null){
+    //show prompt if there is one
+    if (trial.prompt !== null) {
       html += trial.prompt;
     }
+  
+    //display buttons
+    var buttons = [];
+    if (Array.isArray(trial.button_html)) {
+      if (trial.button_html.length == trial.choices.length) {
+        buttons = trial.button_html;
+      } else {
+        console.error('Error in image-button-response-hack plugin. The length of the button_html array does not equal the length of the choices array');
+      }
+    } else {
+      if(trial.timeout){
+        for (var i = 0; i < trial.choices.length; i++) {
+          buttons.push('<button class="jspsych-btn" disabled="true">%choice%</button>');
+        }
+      }else{
+        for (var i = 0; i < trial.choices.length; i++) {
+          buttons.push(trial.button_html);
+        }  
+      }     
+    }
 
-    // add submit button
-    html += '<button id="jspsych-html-slider-response-next" class="jspsych-btn" '+ (trial.require_movement ? "disabled" : "") + '>'+trial.button_label+'</button>';
+    html += '<div id="jspsych-image-button-response-btngroup">';
+
+    if(trial.timeout){
+      trial.choices[0] = trial.choices[0] + '<span id="timer">' + trial.timeout + '</span>';
+    }
+    for (var i = 0; i < trial.choices.length; i++) {
+      var str = buttons[i].replace(/%choice%/g, trial.choices[i]);
+      html += '<div class="jspsych-image-button-response-button" style="display: inline-block; margin:'+trial.margin_vertical+' '+trial.margin_horizontal+'" id="jspsych-image-button-response-button-' + i +'" data-choice="'+i+'">'+str+'</div>';
+    }
+    html += '</div>';
 
     display_element.innerHTML = html;
 
+    // start timing
+    var start_time = performance.now();
+
+    if(trial.timeout){
+      (function(){
+        let timer_span = document.getElementById('timer');
+        timer_span.innerText = '('+trial.timeout+')';
+        let tid = setInterval(()=>{
+          let curr_sec = Math.floor((performance.now() - start_time)/1000);
+          timer_span.innerText = '('+(trial.timeout- curr_sec)+')';
+          if(curr_sec >= 3){
+            let btns = document.getElementsByClassName('jspsych-btn');
+            for(let i=0; i<btns.length; i++){
+              btns[i].disabled = false;
+            }
+            timer_span.innerText = '';
+            clearInterval(tid);
+            return ;
+          }
+        }, 100);
+      })();
+    }
+
+    for (var i = 0; i < trial.choices.length; i++) {
+      display_element.querySelector('#jspsych-image-button-response-button-' + i).addEventListener('click', function(e){
+        var choice = e.currentTarget.getAttribute('data-choice'); // don't use dataset for jsdom compatibility
+        after_response(choice);
+      });
+    }
+
+    // store response
     var response = {
       rt: null,
-      response: null
+      button: null
     };
-    
-    if(trial.require_movement){
-      display_element.querySelector('#jspsych-html-slider-response-response').addEventListener('change', function(){
-        display_element.querySelector('#jspsych-html-slider-response-next').disabled = false;
-      })
-    }
 
-    display_element.querySelector('#jspsych-html-slider-response-next').addEventListener('click', function() {
-      // measure response time
-      var endTime = performance.now();
-      response.rt = endTime - startTime;
-      response.response = display_element.querySelector('#jspsych-html-slider-response-response').value;
+    // function to handle responses by the subject
+    function after_response(choice) {
 
-      if(trial.response_ends_trial){
-        end_trial();
-      } else {
-        display_element.querySelector('#jspsych-html-slider-response-next').disabled = true;
+      // measure rt
+      var end_time = performance.now();
+      var rt = end_time - start_time;
+      response.button = choice;
+      response.rt = rt;
+
+      // after a valid response, the stimulus will have the CSS class 'responded'
+      // which can be used to provide visual feedback that a response was recorded
+      display_element.querySelector('#jspsych-image-button-response-stimulus').className += ' responded';
+
+      // disable all the buttons after a response
+      var btns = document.querySelectorAll('.jspsych-image-button-response-button button');
+      for(var i=0; i<btns.length; i++){
+        //btns[i].removeEventListener('click');
+        btns[i].setAttribute('disabled', 'disabled');
       }
 
-    });
+      if (trial.response_ends_trial) {
+        end_trial();
+      }
+    };
 
-    function end_trial(){
+    // function to end trial when it is time
+    function end_trial() {
 
+      // kill any remaining setTimeout handlers
       jsPsych.pluginAPI.clearAllTimeouts();
 
-      // save data
-      var trialdata = {
+      // gather the data to store for the trial
+      var trial_data = {
         "rt": response.rt,
-        "response": response.response,
-        "stimulus": trial.stimulus
+        "stimulus": trial.stimulus,
+        "button_pressed": response.button
       };
 
+      // clear the display
       display_element.innerHTML = '';
 
-      // next trial
-      jsPsych.finishTrial(trialdata);
-    }
+      // move on to the next trial
+      jsPsych.finishTrial(trial_data);
+    };
 
+
+
+    // hide image if timing is set
     if (trial.stimulus_duration !== null) {
       jsPsych.pluginAPI.setTimeout(function() {
-        display_element.querySelector('#jspsych-html-slider-response-stimulus').style.visibility = 'hidden';
+        display_element.querySelector('#jspsych-image-button-response-stimulus').style.visibility = 'hidden';
       }, trial.stimulus_duration);
     }
 
-    // end trial if trial_duration is set
+    // end trial if time limit is set
     if (trial.trial_duration !== null) {
       jsPsych.pluginAPI.setTimeout(function() {
         end_trial();
       }, trial.trial_duration);
     }
 
-    var startTime = performance.now();
   };
 
   return plugin;
