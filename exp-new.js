@@ -42,7 +42,7 @@ var open_fullscreen = {
     本测验将使用全屏模式，为确保测验准确，请您：<br/>
     <p style="font: 16pt 微软雅黑; text-align:center; line-height: 1.6em">
     （1）在电脑上完成测验，并使用主流浏览器打开本网页<br/>
-    <span style="font-weight:normal">&emsp;&emsp;（Chrome、Edge、Firefox、Safari等，不要用IE）</span><br/>
+    <span style="font-weight:normal">&emsp;&emsp;（Chrome、Edge、Firefox等，不要用IE、Safari）</span><br/>
     （2）关掉电脑上其他正在运行的程序或将其最小化<br/>
     （3）将手机调至静音，并尽可能减少环境噪音干扰<br/>
     （4）在测验过程中不要退出全屏<br/>
