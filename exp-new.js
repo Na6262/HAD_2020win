@@ -124,7 +124,7 @@ var keyQ_check={
   data: { varname: 'keyQ_check' },
   stimulus:
     "<p style='font-size: 25px; text-align:center; font-weight: bold'>\
-    在下面的问题中，如果你选择放弃按按钮，小A是否会被扣除被试费？<br/>",
+    在下面的问题中，如果你选择放弃按按钮，小A是否会被扣除被试费或被电击？<br/>",
   choices: ['会', '不会']
 };
 
