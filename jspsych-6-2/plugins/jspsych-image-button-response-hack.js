@@ -125,12 +125,22 @@ jsPsych.plugins["image-button-response-hack"] = (function() {
         console.error('Error in image-button-response-hack plugin. The length of the button_html array does not equal the length of the choices array');
       }
     } else {
-      for (var i = 0; i < trial.choices.length; i++) {
-        buttons.push(trial.button_html);
-      }
+      if(trial.timeout){
+        for (var i = 0; i < trial.choices.length; i++) {
+          buttons.push('<button class="jspsych-btn" disabled="true">%choice%</button>');
+        }
+      }else{
+        for (var i = 0; i < trial.choices.length; i++) {
+          buttons.push(trial.button_html);
+        }  
+      }     
     }
+
     html += '<div id="jspsych-image-button-response-btngroup">';
 
+    if(trial.timeout){
+      trial.choices[0] = trial.choices[0] + '<span id="timer">' + trial.timeout + '</span>';
+    }
     for (var i = 0; i < trial.choices.length; i++) {
       var str = buttons[i].replace(/%choice%/g, trial.choices[i]);
       html += '<div class="jspsych-image-button-response-button" style="display: inline-block; margin:'+trial.margin_vertical+' '+trial.margin_horizontal+'" id="jspsych-image-button-response-button-' + i +'" data-choice="'+i+'">'+str+'</div>';
@@ -141,6 +151,26 @@ jsPsych.plugins["image-button-response-hack"] = (function() {
 
     // start timing
     var start_time = performance.now();
+
+    if(trial.timeout){
+      (function(){
+        let timer_span = document.getElementById('timer');
+        timer_span.innerText = '('+trial.timeout+')';
+        let tid = setInterval(()=>{
+          let curr_sec = Math.floor((performance.now() - start_time)/1000);
+          timer_span.innerText = '('+(trial.timeout- curr_sec)+')';
+          if(curr_sec >= 3){
+            let btns = document.getElementsByClassName('jspsych-btn');
+            for(let i=0; i<btns.length; i++){
+              btns[i].disabled = false;
+            }
+            timer_span.innerText = '';
+            clearInterval(tid);
+            return ;
+          }
+        }, 100);
+      })();
+    }
 
     for (var i = 0; i < trial.choices.length; i++) {
       display_element.querySelector('#jspsych-image-button-response-button-' + i).addEventListener('click', function(e){
