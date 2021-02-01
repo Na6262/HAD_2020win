@@ -276,7 +276,7 @@ var slider_shock_check = {
   data: { varname: 'slider_shock' },
   stimulus:
     "<p style='text-align:left;'>\
-    请判断：接下来你需要选出你感觉自己有多疼。<br/>",
+    请判断：接下来你只需要选出你感觉自己有多疼。<br/>",
   choices: ['对', '错'],
   require_movement: true,
 };
